@@ -1,2 +1,2 @@
 # WorldWarfare-InternalCheeto
-WorldWarfare-InternalCheeto by RiritoXXL(WIP!!!)
+WIP!!!(WORK IN PROGRESS, IT WILL BE ADDED MY SRC CODE IN 3-4 WEEKS)
