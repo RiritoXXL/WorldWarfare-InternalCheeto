@@ -1,2 +1,6 @@
 # WorldWarfare-InternalCheeto
-WIP!!!(WORK IN PROGRESS, IT WILL BE ADDED MY SRC CODE IN 3-4 WEEKS)
+This is My First Cheeto for Game World Warfare and Economics... So Enjoy to use this!!!
+
+## Donation
+
+[Patreon](https://patreon.com/riritoninigaya)
