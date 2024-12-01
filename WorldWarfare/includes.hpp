@@ -56,7 +56,7 @@ LRESULT __stdcall WndProc(const HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lPar
 }
 
 bool init = false;
-
+bool openmenu = true;
 HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT Flags) 
 {
 	if (!init) {
@@ -79,24 +79,40 @@ HRESULT __stdcall hkPresent(IDXGISwapChain* pSwapChain, UINT SyncInterval, UINT 
 		else
 			return oPresent(pSwapChain, SyncInterval, Flags);
 	}
-	ImGuiWindowFlags fl = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar;
-	ImGui_ImplDX11_NewFrame();
-	ImGui_ImplWin32_NewFrame();
-	ImGui::NewFrame();
-	ImGui::Begin("WorldWarfare-InternalCheeto by RiritoXXL", 0, fl);
-	ImGui::SetNextWindowSize(ImVec2(455, 600));
-	ImGui::Text("Welcome to my new Cheeto for Game World Warfare and Economics...");
-	if (ImGui::Button("Unlimited Budget")) {
-		Budget::SetBudget((unsigned long)300000000i64);
+	ImGuiWindowFlags fl = ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoScrollbar | ImGuiWindowFlags_NoSavedSettings;
+	if (GetAsyncKeyState(VK_DELETE) & 1) 
+	{
+		openmenu = !openmenu;
 	}
-	if (ImGui::Button("Get Budget")) {
+	if (GetAsyncKeyState(VK_F8) & 1) 
+	{
+		kiero::shutdown();
+		MessageBoxA(0, "D3D11 Device has been Shutdowned... This Cheeto will be now exiting(PanicKey)...", "WorldWarfare-InternalCheeto", MB_OK | MB_ICONWARNING);
+		exit(455);
+	}
+	if (GetAsyncKeyState(VK_PAUSE) & 1) 
+	{
+		kiero::shutdown();
+	}
+	if (openmenu) {
+		ImGui_ImplDX11_NewFrame();
+		ImGui_ImplWin32_NewFrame();
+		ImGui::NewFrame();
+		ImGui::Begin("WorldWarfare-InternalCheeto by RiritoXXL", 0, fl);
+		ImGui::SetNextWindowSize(ImVec2(455, 600));
+		ImGui::Text("Welcome to my new Cheeto for Game World Warfare and Economics...");
+		if (ImGui::Button("Unlimited Budget")) {
+			Budget::SetBudget((ulong)3000000i64);
+		}
+		if (ImGui::Button("Get Budget")) {
 
-		ulong cur = Budget::GetBudget();
-		cout << "My Budget: " << cur << endl;
+			ulong cur = Budget::GetBudget();
+			cout << "My Budget: " << cur << endl;
+		}
+		ImGui::End();
+		ImGui::Render();
+		pContext->OMSetRenderTargets(1, &mainRenderTargetView, NULL);
+		ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	}
-	ImGui::End();
-	ImGui::Render();
-	pContext->OMSetRenderTargets(1, &mainRenderTargetView, NULL);
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 	return oPresent(pSwapChain, SyncInterval, Flags);
 }
